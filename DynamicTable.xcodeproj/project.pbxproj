@@ -24,6 +24,7 @@
 		3B0D7FD1208F8830008E39A0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3B0D7FD3208F8830008E39A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3B0D7FD9208F8FE9008E39A0 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
+		3B0D7FDB208FA62C008E39A0 /* DynamicTable.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DynamicTable.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +57,7 @@
 		3B0D7FC6208F882D008E39A0 /* DynamicTable */ = {
 			isa = PBXGroup;
 			children = (
+				3B0D7FDB208FA62C008E39A0 /* DynamicTable.entitlements */,
 				3B0D7FC7208F882D008E39A0 /* AppDelegate.swift */,
 				3B0D7FC9208F882D008E39A0 /* ViewController.swift */,
 				3B0D7FCB208F882D008E39A0 /* Main.storyboard */,
@@ -99,6 +101,11 @@
 				TargetAttributes = {
 					3B0D7FC3208F882D008E39A0 = {
 						CreatedOnToolsVersion = 9.3;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -284,14 +291,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = DynamicTable/DynamicTable.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 299A72ZY42;
+				DEVELOPMENT_TEAM = XK3F7SC7Z3;
 				INFOPLIST_FILE = DynamicTable/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.vtinfo.jayant.arora.DynamicTable;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vtinfo.jayant.DynamicTable;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -302,14 +311,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = DynamicTable/DynamicTable.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 299A72ZY42;
+				DEVELOPMENT_TEAM = XK3F7SC7Z3;
 				INFOPLIST_FILE = DynamicTable/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.vtinfo.jayant.arora.DynamicTable;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vtinfo.jayant.DynamicTable;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

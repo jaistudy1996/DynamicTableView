@@ -41,6 +41,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        let token = deviceToken.map { data -> String in
+            return String(format: "%02.2hhx", data)
+        }
+
+        let completeToken = token.joined()
+        print("Token: \(completeToken)")
+        print("Token count: \(completeToken.count)")
+    }
+
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        print("Failure in registering for remote notifications: \(error)")
+    }
+
 
 }
 

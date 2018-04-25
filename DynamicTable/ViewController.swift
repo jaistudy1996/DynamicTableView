@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import UserNotifications
 
 class ViewController: UIViewController {
 
@@ -22,6 +23,14 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
+        if #available(iOS 11.0, *) {
+            tableView.dragDelegate = self
+//            tableView.dropDelegate = self
+            tableView.dragInteractionEnabled = true
+        } else {
+            // Fallback on earlier versions
+        }
+        requestAuthForNotifications()
     }
 
     override func didReceiveMemoryWarning() {
@@ -68,5 +77,62 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         cell.cellLabel.text = tableData[indexPath.row]
         return cell
     }
+
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "Section: \(section)"
+    }
+
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        tableData.swapAt(sourceIndexPath.row, destinationIndexPath.row)
+    }
+
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+
+}
+
+// MARK: Notification Handling
+extension ViewController {
+    func requestAuthForNotifications() {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge], completionHandler: { (granted, error) in
+            guard granted else { return }
+            self.getCurrentNotificationSettings()
+        })
+    }
+
+    func getCurrentNotificationSettings() {
+        UNUserNotificationCenter.current().getNotificationSettings { (settings) in
+            guard settings.authorizationStatus == .authorized else { return }
+            UIApplication.shared.registerForRemoteNotifications()
+        }
+    }
+}
+
+extension ViewController: UITableViewDragDelegate {
+    @available(iOS 11.0, *)
+    func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+        tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
+        let dragItem = UIDragItem(itemProvider: NSItemProvider())
+        dragItem.localObject = tableData[indexPath.row]
+        return [dragItem]
+    }
+}
+
+extension ViewController: UITableViewDropDelegate {
+    @available(iOS 11.0, *)
+    func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
+
+        guard session.localDragSession != nil,
+            (destinationIndexPath?.row)! < tableData.count,
+            tableView.hasActiveDrag
+        else {
+            return UITableViewDropProposal(operation: .forbidden)
+        }
+        return UITableViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
+    }
+
+    @available(iOS 11.0, *)
+    func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) { }
 }
 
